@@ -13,6 +13,7 @@ namespace WpfApp1
         private Storage storage;
         private Random random;
 
+
         public bool IsAlive { get; private set; }
 
         public Consumer(int id, Storage storage, Random random)
@@ -31,6 +32,7 @@ namespace WpfApp1
         {
             List<int> data;
             int integralValue;
+            Record record;
             if (IsAlive) return;
 
             IsAlive = true;
@@ -43,6 +45,8 @@ namespace WpfApp1
                     data = storage.Get();
                     Thread.Sleep(random.Next(1000, 10000));
                     integralValue = CalculateIntegral(data[0], data[1]);
+                    record = new Record(data[0], data[1], integralValue);
+                    DbConnector.AddRecord(record);
                 }
             }
 
